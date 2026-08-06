@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional JavaScript for Web Developers - Table of Contents</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e8;
+      --panel: rgba(255, 252, 247, 0.9);
+      --ink: #1f2933;
+      --muted: #52606d;
+      --line: #d9cbb8;
+      --accent: #9f3a24;
+      --accent-soft: #f4d7c6;
+      --shadow: 0 18px 45px rgba(76, 54, 37, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(159, 58, 36, 0.12), transparent 28%),
+        linear-gradient(180deg, #fbf7f1 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+
+    header {
+      padding: 2rem;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 0.85rem 0 0;
+      max-width: 56rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .summary {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 1.25rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    main {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .chapter {
+      padding: 1.2rem 1.25rem 1.3rem;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255, 253, 250, 0.92);
+      box-shadow: 0 10px 24px rgba(76, 54, 37, 0.08);
+    }
+
+    .chapter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .chapter h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      columns: 1;
+    }
+
+    li+li {
+      margin-top: 0.35rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover,
+    a:focus-visible {
+      text-decoration: underline;
+    }
+
+    .path {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (min-width: 900px) {
+      ul {
+        columns: 2;
+        column-gap: 2rem;
+      }
+
+      li {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>Professional JavaScript for Web Developers</h1>
+      <p class="subtitle">Root directory table of contents for all HTML example pages in this repository. Links are
+        grouped by top-level chapter or appendix so you can jump directly to each runnable sample.</p>
+      <div id="summary" class="summary"></div>
+    </header>
+    <main id="toc"></main>
+  </div>
+
+  <script>
+    const pages = [
+      "Chapter11PromisesAndAsyncFunctions/Promises/PromiseExtensions/PromiseCanceling/PromiseCancelingExample02.html",
+      "Chapter12TheBrowserObjectModel/TheLocationObject/ManipulatingTheLocation/ManipulatingTheLocationExample04.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/HierarchyOfNodesExample01.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentChildren/DocumentChildrenExample01.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentChildren/DocumentChildrenExample02.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentChildren/DocumentChildrenExample05.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentWriting/DocumentWritingExample01.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentWriting/DocumentWritingExample02.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentWriting/DocumentWritingExample03.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/DocumentWriting/DocumentWritingExample04.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheDocumentType/LocatingElements/LocatingElementsExample02.html",
+      "Chapter14TheDocumentObjectModel/HierarchyOfNodes/TheTextType/TheTextTypeExample01.html",
+      "Chapter14TheDocumentObjectModel/MutationObservers/BasicUsage/MultiplexingAMutationObserver/MultiplexingAMutationObserverExample01.html",
+      "Chapter14TheDocumentObjectModel/WorkingWithTheDOM/DynamicScripts/DynamicScriptsExample01.html",
+      "Chapter14TheDocumentObjectModel/WorkingWithTheDOM/DynamicScripts/DynamicScriptsExample05.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/TheInnerhtmlProperty/TheInnerhtmlPropertyExample01.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/TheInnerhtmlProperty/TheInnerhtmlPropertyExample02.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/TheOuterhtmlProperty/TheOuterhtmlPropertyExample01.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/TheOuterhtmlProperty/TheOuterhtmlPropertyExample02.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/UsingInnerhtmlInLegacyInternetExplorer/UsingInnerhtmlInLegacyInternetExplorerExample01.html",
+      "Chapter15DOMExtensions/HTML5/MarkupInsertion/UsingInnerhtmlInLegacyInternetExplorer/UsingInnerhtmlInLegacyInternetExplorerExample02.html",
+      "Chapter15DOMExtensions/ProprietaryExtensions/MarkupInsertion/TheInnertextProperty/TheInnertextPropertyExample01.html",
+      "Chapter15DOMExtensions/SelectorsAPI/TheQueryselectorallMethod/TheQueryselectorallMethodExample01.html",
+      "Chapter16DOMLevels2And3/Ranges/InsertingDOMRangeContent/InsertingDOMRangeContentExample04.html",
+      "Chapter16DOMLevels2And3/Ranges/InteractingWithDOMRangeContent/InteractingWithDOMRangeContentExample01.html",
+      "Chapter16DOMLevels2And3/Ranges/InteractingWithDOMRangeContent/InteractingWithDOMRangeContentExample03.html",
+      "Chapter16DOMLevels2And3/Ranges/InteractingWithDOMRangeContent/InteractingWithDOMRangeContentExample05.html",
+      "Chapter16DOMLevels2And3/Ranges/InteractingWithDOMRangeContent/InteractingWithDOMRangeContentExample07.html",
+      "Chapter16DOMLevels2And3/Ranges/SimpleSelectionInDOMRanges/SimpleSelectionInDOMRangesExample01.html",
+      "Chapter16DOMLevels2And3/Styles/AccessingElementStyles/ComputedStyles/ComputedStylesExample01.html",
+      "Chapter16DOMLevels2And3/Traversals/NodeIterator/NodeIteratorExample05.html",
+      "Chapter16DOMLevels2And3/Traversals/NodeIterator/NodeIteratorExample06.html",
+      "Chapter16DOMLevels2And3/Traversals/TraversalsExample01.html",
+      "Chapter16DOMLevels2And3/Traversals/TreeWalker/TreeWalkerExample02.html",
+      "Chapter17Events/EventFlow/EventBubbling/EventBubblingExample01.html",
+      "Chapter17Events/EventHandlers/HTMLEventHandlers/HTMLEventHandlersExample03.html",
+      "Chapter17Events/EventTypes/HTML5Events/TheContextmenuEvent/TheContextmenuEventExample01.html",
+      "Chapter17Events/EventTypes/MouseAndWheelEvents/RelatedElements/RelatedElementsExample01.html",
+      "Chapter17Events/EventTypes/UIEvents/TheLoadEvent/TheLoadEventExample02.html",
+      "Chapter17Events/EventTypes/UIEvents/TheUnloadEvent/TheUnloadEventExample02.html",
+      "Chapter17Events/MemoryAndPerformance/RemovingEventHandlers/RemovingEventHandlersExample01.html",
+      "Chapter17Events/MemoryAndPerformance/RemovingEventHandlers/RemovingEventHandlersExample02.html",
+      "Chapter18AnimationAndGraphicsWithCanvas/WebGL/WebGLBasics/Shaders/CreatingShaderPrograms/CreatingShaderProgramsExample01.html",
+      "Chapter19ScriptingForms/RichTextEditing/RichTextEditingExample01.html",
+      "Chapter19ScriptingForms/RichTextEditing/RichTextEditingExample02.html",
+      "Chapter19ScriptingForms/ScriptingTextBoxes/AutomaticTabForward/AutomaticTabForwardExample02.html",
+      "Chapter1WhatIsJavaScript/JavaScriptImplementations/TheDocumentObjectModel/TheDocumentObjectModelExample01.html",
+      "Chapter20JavaScriptAPIs/BlobAndFileAPIs/BlobsAndPartialReads/BlobsAndPartialReadsExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/CustomElements/AddingWebComponentContent/AddingWebComponentContentExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/CustomElements/AddingWebComponentContent/AddingWebComponentContentExample02.html",
+      "Chapter20JavaScriptAPIs/WebComponents/HTMLTemplates/TemplateScripts/TemplateScriptsExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/HTMLTemplates/UsingADocumentFragment/UsingADocumentFragmentExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/HTMLTemplates/UsingADocumentFragment/UsingADocumentFragmentExample03.html",
+      "Chapter20JavaScriptAPIs/WebComponents/HTMLTemplates/UsingTemplateTags/UsingTemplateTagsExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/CompositionAndShadowDOMSlots/CompositionAndShadowDOMSlotsExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/CompositionAndShadowDOMSlots/CompositionAndShadowDOMSlotsExample02.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/CompositionAndShadowDOMSlots/CompositionAndShadowDOMSlotsExample03.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/CompositionAndShadowDOMSlots/CompositionAndShadowDOMSlotsExample04.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/CompositionAndShadowDOMSlots/CompositionAndShadowDOMSlotsExample05.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/IntroductionToShadowDOM/IntroductionToShadowDOMExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/IntroductionToShadowDOM/IntroductionToShadowDOMExample02.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/UsingAShadowDOM/UsingAShadowDOMExample01.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/UsingAShadowDOM/UsingAShadowDOMExample02.html",
+      "Chapter20JavaScriptAPIs/WebComponents/ShadowDOM/UsingAShadowDOM/UsingAShadowDOMExample03.html",
+      "Chapter21ErrorHandlingAndDebugging/CommonLegacyInternetExplorerErrors/UnknownRuntimeError/UnknownRuntimeErrorExample01.html",
+      "Chapter21ErrorHandlingAndDebugging/DebuggingTechniques/LoggingMessagesToThePage/LoggingMessagesToThePageExample01.html",
+      "Chapter22XMLInJavaScript/XSLTSupportInBrowsers/TheXSLTProcessorType/TheXSLTProcessorTypeExample03.html",
+      "Chapter26Modules/ECMAScript6Modules/BackwardsCompatibility/BackwardsCompatibilityExample01.html",
+      "Chapter26Modules/ECMAScript6Modules/ModuleTaggingAndDefinition/ModuleTaggingAndDefinitionExample01.html",
+      "Chapter26Modules/ECMAScript6Modules/ModuleTaggingAndDefinition/ModuleTaggingAndDefinitionExample02.html",
+      "Chapter26Modules/ECMAScript6Modules/ModuleTaggingAndDefinition/ModuleTaggingAndDefinitionExample03.html",
+      "Chapter26Modules/ECMAScript6Modules/ModuleTaggingAndDefinition/ModuleTaggingAndDefinitionExample04.html",
+      "Chapter26Modules/TheModulePattern/EntryPoints/EntryPointsExample01.html",
+      "Chapter28BestPractices/Maintainability/LooseCoupling/DecoupleHTMLJavaScript/DecoupleHTMLJavaScriptExample01.html",
+      "Chapter28BestPractices/Maintainability/LooseCoupling/DecoupleHTMLJavaScript/DecoupleHTMLJavaScriptExample02.html",
+      "Chapter2JavaScriptInHTML/InlineCodeVersusExternalFiles/InlineCodeVersusExternalFilesExample01.html",
+      "Chapter2JavaScriptInHTML/InlineCodeVersusExternalFiles/InlineCodeVersusExternalFilesExample02.html",
+      "Chapter2JavaScriptInHTML/TheNoscriptElement/TheNoscriptElementExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/AsynchronousScripts/AsynchronousScriptsExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/ChangesInXHTML/ChangesInXHTMLExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/ChangesInXHTML/ChangesInXHTMLExample02.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/ChangesInXHTML/ChangesInXHTMLExample03.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/ChangesInXHTML/ChangesInXHTMLExample04.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/DeferredScripts/DeferredScriptsExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/DeprecatedSyntax/DeprecatedSyntaxExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TagPlacement/TagPlacementExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TagPlacement/TagPlacementExample02.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample01.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample02.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample03.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample04.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample05.html",
+      "Chapter2JavaScriptInHTML/TheScriptElement/TheScriptElementExample06.html",
+      "Chapter3LanguageBasics/Variables/LetDeclarations/ConditionalDeclaration/ConditionalDeclarationExample01.html",
+      "Chapter3LanguageBasics/Variables/LetDeclarations/ConditionalDeclaration/ConditionalDeclarationExample02.html"
+    ];
+
+    const groups = pages.reduce((accumulator, page) => {
+      const [chapter] = page.split("/");
+      if (!accumulator[chapter]) {
+        accumulator[chapter] = [];
+      }
+      accumulator[chapter].push(page);
+      return accumulator;
+    }, {});
+
+    const toc = document.getElementById("toc");
+    const summary = document.getElementById("summary");
+
+    function getSectionOrder(sectionName) {
+      const chapterMatch = sectionName.match(/^Chapter(\d+)/);
+      if (chapterMatch) {
+        return { bucket: 0, order: Number(chapterMatch[1]), name: sectionName };
+      }
+
+      const appendixMatch = sectionName.match(/^Appendix([A-Z]+)/);
+      if (appendixMatch) {
+        return { bucket: 1, order: appendixMatch[1], name: sectionName };
+      }
+
+      return { bucket: 2, order: sectionName, name: sectionName };
+    }
+
+    const chapterNames = Object.keys(groups).sort((left, right) => {
+      const leftOrder = getSectionOrder(left);
+      const rightOrder = getSectionOrder(right);
+
+      if (leftOrder.bucket !== rightOrder.bucket) {
+        return leftOrder.bucket - rightOrder.bucket;
+      }
+
+      if (leftOrder.order < rightOrder.order) {
+        return -1;
+      }
+
+      if (leftOrder.order > rightOrder.order) {
+        return 1;
+      }
+
+      return leftOrder.name.localeCompare(rightOrder.name);
+    });
+
+    summary.textContent = `${pages.length} linked example pages across ${chapterNames.length} sections`;
+
+    chapterNames.forEach((chapter) => {
+      const section = document.createElement("section");
+      section.className = "chapter";
+
+      const heading = document.createElement("div");
+      heading.className = "chapter-header";
+      heading.innerHTML = `<h2>${chapter}</h2><span class="count">${groups[chapter].length} page(s)</span>`;
+
+      const list = document.createElement("ul");
+
+      groups[chapter].forEach((page) => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        const parts = page.split("/");
+        link.href = page;
+        link.textContent = parts[parts.length - 1];
+
+        const path = document.createElement("span");
+        path.className = "path";
+        path.textContent = ` (${parts.slice(1, -1).join(" / ")})`;
+
+        item.append(link, path);
+        list.appendChild(item);
+      });
+
+      section.append(heading, list);
+      toc.appendChild(section);
+    });
+  </script>
+</body>
+
+</html>
